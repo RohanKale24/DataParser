@@ -1,4 +1,4 @@
-,votes_dem,votes_gop,total_votes,per_dem,per_gop,diff,per_point_diff,state_abbr,county_name,combined_fips
+row,votes_dem,votes_gop,total_votes,per_dem,per_gop,diff,per_point_diff,state_abbr,county_name,combined_fips
 0,93003.0,130413.0,246588.0,0.37715947248,0.528870018006,"37,410",15.17%,AK,Alaska,2013
 1,93003.0,130413.0,246588.0,0.37715947248,0.528870018006,"37,410",15.17%,AK,Alaska,2016
 2,93003.0,130413.0,246588.0,0.37715947248,0.528870018006,"37,410",15.17%,AK,Alaska,2020
