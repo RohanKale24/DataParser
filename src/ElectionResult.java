@@ -16,5 +16,43 @@ public class ElectionResult {
         this.combinedFips = combinedFips;
     }
 
+    public int getDemVotes() {
+        return demVotes;
+    }
 
+    public int getGopVotes() {
+        return gopVotes;
+    }
+
+    public int getTotalVotes() {
+        return totalVotes;
+    }
+
+    public double getVotesPerDem() {
+        return votesPerDem;
+    }
+
+    public double getVotesPerGop() {
+        return votesPerGop;
+    }
+
+    public double getDiffBtwnDemAndGop() {
+        return diffBtwnDemAndGop;
+    }
+
+    public double getPerPointDiff() {
+        return perPointDiff;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public int getCombinedFips() {
+        return combinedFips;
+    }
 }
