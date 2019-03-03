@@ -100,4 +100,5 @@ public class ElectionResult {
                 ","+"\""+diffBtwnDemAndGop+","+"\","+perPointDiff+"%," + state+","+county+","+combinedFips;
         return s;
     }
+
 }
