@@ -55,4 +55,44 @@ public class ElectionResult {
     public int getCombinedFips() {
         return combinedFips;
     }
+
+    public void setDemVotes(int demVotes) {
+        this.demVotes = demVotes;
+    }
+
+    public void setGopVotes(int gopVotes) {
+        this.gopVotes = gopVotes;
+    }
+
+    public void setTotalVotes(int totalVotes) {
+        this.totalVotes = totalVotes;
+    }
+
+    public void setVotesPerDem(double votesPerDem) {
+        this.votesPerDem = votesPerDem;
+    }
+
+    public void setVotesPerGop(double votesPerGop) {
+        this.votesPerGop = votesPerGop;
+    }
+
+    public void setDiffBtwnDemAndGop(double diffBtwnDemAndGop) {
+        this.diffBtwnDemAndGop = diffBtwnDemAndGop;
+    }
+
+    public void setPerPointDiff(double perPointDiff) {
+        this.perPointDiff = perPointDiff;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public void setCombinedFips(int combinedFips) {
+        this.combinedFips = combinedFips;
+    }
 }
