@@ -34,67 +34,81 @@ public class Utils {
 
 
             if (line.contains("\"")) {
-                int indexOfApostrophe = line.indexOf("\"");
-                int indexOfComma = line.indexOf(",", indexOfApostrophe);
 
+                String finalData = removeOddCharachters(line);
 
-                String dataWithoutPercentage = line.substring(0, line.indexOf("%")) +
-                        line.substring(line.indexOf("%") + 1);
+                ElectionResult electionResult = createElectionResult(finalData);
 
-                String dataWithoutExtraComma = dataWithoutPercentage.substring(0, indexOfComma) + dataWithoutPercentage.substring(indexOfComma + 1);
-
-                if (dataWithoutExtraComma.indexOf(",", indexOfApostrophe) < dataWithoutExtraComma.indexOf("\"", indexOfApostrophe + 1) && dataWithoutExtraComma.indexOf(",", indexOfApostrophe) != -1) {
-
-
-                    int newIndexOfComma = dataWithoutExtraComma.indexOf(",", indexOfApostrophe);
-                    dataWithoutExtraComma = dataWithoutExtraComma.substring(0, newIndexOfComma) + dataWithoutExtraComma.substring(newIndexOfComma + 1);
-
-
-                }
-
-
-                String dataWithoutFirstApostrophe = dataWithoutExtraComma.substring(0, indexOfApostrophe) +
-                        dataWithoutExtraComma.substring(indexOfApostrophe + 1);
-                int indexOfSecondApostrophe = dataWithoutFirstApostrophe.indexOf("\"");
-                String dataWithoutSecondApostrophe = dataWithoutFirstApostrophe.substring(0, indexOfSecondApostrophe)
-                        + dataWithoutFirstApostrophe.substring(indexOfSecondApostrophe + 1);
-
-
-                String[] categories = dataWithoutSecondApostrophe.split(",");
-                int demVotes = (int) Double.parseDouble(categories[1]);
-                int gopVotes = (int) Double.parseDouble(categories[2]);
-                int totalVotes = (int) Double.parseDouble(categories[3]);
-                double votesPerDem = Double.parseDouble(categories[4]);
-                double votesPerGop = Double.parseDouble(categories[5]);
-                double diffBtwnDemAndGop = Double.parseDouble(categories[6]);
-                double perPointDiff = Double.parseDouble(categories[7]);
-                String state = categories[8];
-                String county = categories[9];
-                int combinedFips = (int) Double.parseDouble(categories[10]);
-                ElectionResult electionResult = new ElectionResult(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
-                electionResult.toString();
                 results.add(electionResult);
             } else {
 
-                String dataWithoutPercentage = line.substring(0, line.indexOf("%")) +
-                        line.substring(line.indexOf("%") + 1);
-                String[] categories = dataWithoutPercentage.split(",");
-                int demVotes = (int) Double.parseDouble(categories[1]);
-                int gopVotes = (int) Double.parseDouble(categories[2]);
-                int totalVotes = (int) Double.parseDouble(categories[3]);
-                double votesPerDem = Double.parseDouble(categories[4]);
-                double votesPerGop = Double.parseDouble(categories[5]);
-                double diffBtwnDemAndGop = Double.parseDouble(categories[6]);
-                double perPointDiff = Double.parseDouble(categories[7]);
-                String state = categories[8];
-                String county = categories[9];
-                int combinedFips = (int) Double.parseDouble(categories[10]);
-                ElectionResult electionResult = new ElectionResult(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
-                electionResult.toString();
+                String finalData = removePercentage(line);
+
+                ElectionResult electionResult = createElectionResult(finalData);
+
                 results.add(electionResult);
             }
         }
         return results;
+    }
+
+    private String removeOddCharachters(String line) {
+        int indexOfApostrophe = line.indexOf("\"");
+        int indexOfComma = line.indexOf(",", indexOfApostrophe);
+
+        String dataWithoutPercentage = removePercentage(line);
+
+        String dataWithoutExtraComma = removeComma(dataWithoutPercentage, indexOfComma, indexOfApostrophe);
+
+        String dataWithoutApostrophe = removeApostrophe(dataWithoutExtraComma, indexOfApostrophe);
+
+        return dataWithoutApostrophe;
+    }
+
+    private String removeComma(String dataWithoutPercentage, int indexOfComma, int indexOfApostrophe) {
+        String dataWithoutExtraComma = dataWithoutPercentage.substring(0, indexOfComma) + dataWithoutPercentage.substring(indexOfComma + 1);
+
+        if (dataWithoutExtraComma.indexOf(",", indexOfApostrophe) < dataWithoutExtraComma.indexOf("\"", indexOfApostrophe + 1) && dataWithoutExtraComma.indexOf(",", indexOfApostrophe) != -1) {
+
+
+            int newIndexOfComma = dataWithoutExtraComma.indexOf(",", indexOfApostrophe);
+            dataWithoutExtraComma = dataWithoutExtraComma.substring(0, newIndexOfComma) + dataWithoutExtraComma.substring(newIndexOfComma + 1);
+
+
+        }
+        return dataWithoutExtraComma;
+    }
+
+    private String removeApostrophe(String dataWithoutExtraComma, int indexOfApostrophe) {
+        String dataWithoutFirstApostrophe = dataWithoutExtraComma.substring(0, indexOfApostrophe) +
+                dataWithoutExtraComma.substring(indexOfApostrophe + 1);
+        int indexOfSecondApostrophe = dataWithoutFirstApostrophe.indexOf("\"");
+        String dataWithoutSecondApostrophe = dataWithoutFirstApostrophe.substring(0, indexOfSecondApostrophe)
+                + dataWithoutFirstApostrophe.substring(indexOfSecondApostrophe + 1);
+        return dataWithoutSecondApostrophe;
+    }
+
+    public ElectionResult createElectionResult(String data) {
+        String[] categories = data.split(",");
+        int demVotes = (int) Double.parseDouble(categories[1]);
+        int gopVotes = (int) Double.parseDouble(categories[2]);
+        int totalVotes = (int) Double.parseDouble(categories[3]);
+        double votesPerDem = Double.parseDouble(categories[4]);
+        double votesPerGop = Double.parseDouble(categories[5]);
+        double diffBtwnDemAndGop = Double.parseDouble(categories[6]);
+        double perPointDiff = Double.parseDouble(categories[7]);
+        String state = categories[8];
+        String county = categories[9];
+        int combinedFips = (int) Double.parseDouble(categories[10]);
+        ElectionResult electionResult = new ElectionResult(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
+        return electionResult;
+    }
+
+    public String removePercentage(String data) {
+
+        String dataWithoutPercentage = data.substring(0, data.indexOf("%")) +
+                data.substring(data.indexOf("%") + 1);
+        return dataWithoutPercentage;
     }
 
 
