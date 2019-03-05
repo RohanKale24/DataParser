@@ -26,12 +26,14 @@ public class Utils {
     }
 
     public ArrayList<ElectionResult> parseElectionResults(String data) {
+
         ArrayList<ElectionResult> results = new ArrayList<>();
+
         String[] lines = data.split("\n");
 
         for (int i = 1; i < lines.length; i++) {
-            String line = lines[i];
 
+            String line = lines[i];
 
             if (line.contains("\"")) {
 
@@ -53,7 +55,9 @@ public class Utils {
     }
 
     private String removeOddCharachters(String line) {
+
         int indexOfApostrophe = line.indexOf("\"");
+
         int indexOfComma = line.indexOf(",", indexOfApostrophe);
 
         String dataWithoutPercentage = removePercentage(line);
@@ -82,9 +86,12 @@ public class Utils {
     private String removeApostrophe(String dataWithoutExtraComma, int indexOfApostrophe) {
         String dataWithoutFirstApostrophe = dataWithoutExtraComma.substring(0, indexOfApostrophe) +
                 dataWithoutExtraComma.substring(indexOfApostrophe + 1);
+
         int indexOfSecondApostrophe = dataWithoutFirstApostrophe.indexOf("\"");
+
         String dataWithoutSecondApostrophe = dataWithoutFirstApostrophe.substring(0, indexOfSecondApostrophe)
                 + dataWithoutFirstApostrophe.substring(indexOfSecondApostrophe + 1);
+
         return dataWithoutSecondApostrophe;
     }
 
