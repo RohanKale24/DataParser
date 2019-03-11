@@ -24,5 +24,23 @@ public class EducationInfo {
         return bachelorsOrMore;
     }
 
-   }
+    public void setNoHighSchool(double noHighSchool) {
+        this.noHighSchool = noHighSchool;
+    }
+
+    public void setOnlyHighSchool(double onlyHighSchool) {
+        this.onlyHighSchool = onlyHighSchool;
+    }
+
+    public void setBachelorsOrMore(double bachelorsOrMore) {
+        this.bachelorsOrMore = bachelorsOrMore;
+    }
+
+    public void setSomeCollege(double someCollege) {
+        this.someCollege = someCollege;
+    }
+
+
+
+}
 
