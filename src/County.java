@@ -33,4 +33,27 @@ public class County {
     public EmploymentInfo getEmploymentInfo() {
         return employmentInfo;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFips(int fips) {
+        this.fips = fips;
+    }
+
+    public void setElectionInfo(ElectionInfo electionInfo) {
+        this.electionInfo = electionInfo;
+    }
+
+    public void setEducationInfo(EducationInfo educationInfo) {
+        this.educationInfo = educationInfo;
+    }
+
+    public void setEmploymentInfo(EmploymentInfo employmentInfo) {
+        this.employmentInfo = employmentInfo;
+    }
+    public String toString(){
+        return fips + "," + name + "," + electionInfo.toString() + "," + educationInfo.toString() + "," + employmentInfo.toString();
+    }
 }
