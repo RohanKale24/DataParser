@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,14 +10,16 @@ public class Utils {
 
     private static final int MAX_FIPS_NUMBER = 72153;
 
+
     public Utils() {
 
     }
 
-    public void createCounties(){
+    public ArrayList<County> createCounties(){
         ArrayList<ElectionInfo> electionResults = parseElectionResults();
         ArrayList<EducationInfo> eduResults = parseEducationInfo();
         ArrayList<EmploymentInfo> employmentresults = parseEmploymentInfo();
+        ArrayList<County> counties = new ArrayList<>();
         for (int i = 0; i < MAX_FIPS_NUMBER; i++) {
             County c = new County("add later",i);//finish this code block
              EducationInfo educationInfo = eduResults.get(i);
@@ -25,6 +28,28 @@ public class Utils {
             c.setEducationInfo(educationInfo);
             c.setElectionInfo(electionInfo);
             c.setEmploymentInfo(employmentInfo);
+            counties.add(c);
+        }
+        return counties;
+    }
+
+    public ArrayList<State> createStates(){
+        ArrayList<State> states =  new ArrayList<>();
+        ArrayList<County> counties = createCounties();
+
+        for (int i = 0; i < counties.size(); i++) {
+            State state = new State("Name");//change
+            state.add(counties.get(i));
+        }
+        return states;
+    }
+
+    public void assignStatesToDataManager(){
+        DataManager d = new DataManager();
+        ArrayList<State> states = createStates();
+        for (int i = 0; i < states.size(); i++) {
+             d.addState(states.get(i));
+
         }
     }
 
