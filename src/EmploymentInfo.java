@@ -21,5 +21,20 @@ public class EmploymentInfo {
     public double getUnemployedPercent() {
         return unemployedPercent;
     }
+    public void setTotalLaborForce(int totalLaborForce) {
+        this.totalLaborForce = totalLaborForce;
+    }
+    public void setEmployedLaborForce(int employedLaborForce) {
+        this.employedLaborForce = employedLaborForce;
+    }
+    public void setUnemployedLaborForce(int unemployedLaborForce) {
+        this.unemployedLaborForce = unemployedLaborForce;
+    }
+    public void setUnemployedPercent(double unemployedPercent) {
+        this.unemployedPercent = unemployedPercent;
+    }
+    public String toString(){
+        return totalLaborForce + "," + employedLaborForce + "," + unemployedLaborForce + "," + unemployedPercent;
+    }
 
 }
