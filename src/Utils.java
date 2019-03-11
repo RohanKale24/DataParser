@@ -39,7 +39,9 @@ public class Utils {
         return normalizedString;
     }
 
+    public ArrayList<EmploymentInfo> parseEmploymentInfo(){
 
+    }
 
     public static String readFileAsString(String filepath) {
         StringBuilder output = new StringBuilder();
