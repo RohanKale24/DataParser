@@ -40,7 +40,9 @@ public class EducationInfo {
         this.someCollege = someCollege;
     }
 
-
+    public String toString() {
+        return noHighSchool + "," + onlyHighSchool + "," + someCollege + "," + bachelorsOrMore;
+    }
 
 }
 
