@@ -14,4 +14,23 @@ public class County {
         employmentInfo = new EmploymentInfo(-1, -1, -1, -1);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getFips() {
+        return fips;
+    }
+
+    public ElectionInfo getElectionInfo() {
+        return electionInfo;
+    }
+
+    public EducationInfo getEducationInfo() {
+        return educationInfo;
+    }
+
+    public EmploymentInfo getEmploymentInfo() {
+        return employmentInfo;
+    }
 }
