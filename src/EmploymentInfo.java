@@ -9,4 +9,17 @@ public class EmploymentInfo {
         this.unemployedLaborForce = unemployedLaborForce;
         this.unemployedPercent = unemployedPercent;
     }
+    public int getTotalLaborForce() {
+        return totalLaborForce;
+    }
+    public int getEmployedLaborForce() {
+        return employedLaborForce;
+    }
+    public int getUnemployedLaborForce() {
+        return unemployedLaborForce;
+    }
+    public double getUnemployedPercent() {
+        return unemployedPercent;
+    }
+
 }
