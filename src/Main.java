@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         Utils util = new Utils();
 //        ArrayList<ElectionInfo> results = util.parseElectionResults();
-//        ArrayList<EducationInfo> eduResults = util.parseEducationInfo();
-//        ArrayList<EmploymentInfo> employmentresults = util.parseEmploymentInfo();
+        ArrayList<EducationInfo> eduResults = util.parseEducationInfo();
+        ArrayList<EmploymentInfo> employmentresults = util.parseEmploymentInfo();
 
     }
 

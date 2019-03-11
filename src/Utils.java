@@ -3,10 +3,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 public class Utils {
+
+    private static final int MAX_FIPS_NUMBER = 72153;
 
     public Utils() {
 
+    }
+
+    public void createCounties(){
+        ArrayList<ElectionInfo> electionResults = parseElectionResults();
+        ArrayList<EducationInfo> eduResults = parseEducationInfo();
+        ArrayList<EmploymentInfo> employmentresults = parseEmploymentInfo();
+        for (int i = 0; i < MAX_FIPS_NUMBER; i++) {
+            County c = new County("add later",i);//finish this code block
+             EducationInfo educationInfo = eduResults.get(i);
+            EmploymentInfo employmentInfo = employmentresults.get(i);
+            ElectionInfo electionInfo = electionResults.get(i);//I know it doesnt match up
+            c.setEducationInfo(educationInfo);
+            c.setElectionInfo(electionInfo);
+            c.setEmploymentInfo(employmentInfo);
+        }
     }
 
     public ArrayList<ElectionInfo> parseElectionResults() {
@@ -32,7 +51,7 @@ public class Utils {
     public ArrayList<EducationInfo> parseEducationInfo() {
         ArrayList<EducationInfo> totalEducationInfo = new ArrayList<>();
         String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
-        for (int i = 8; i < employmentData.length; i++) {
+        for (int i = 7; i < employmentData.length; i++) {
             String vals = formatData(employmentData[i]);
 
             EducationInfo e = createEducationInfo(vals);
@@ -41,18 +60,18 @@ public class Utils {
 
         }
         return totalEducationInfo;
-    }
+    }//debug
 
     public ArrayList<EmploymentInfo> parseEmploymentInfo() {
         ArrayList<EmploymentInfo> totalEmploymentResults = new ArrayList<>();
         String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
-        for (int i = 8; i < employmentData.length; i++) {
+        for (int i = 10; i < employmentData.length; i++) {
             String vals = formatData(employmentData[i]);
             EmploymentInfo e = createEmploymentInfo(vals);
             totalEmploymentResults.add(e);
         }
         return totalEmploymentResults;
-    }
+    }//debug
 
     private String formatData(String data) {
         String normalizedString = "";
@@ -106,10 +125,10 @@ public class Utils {
     private EmploymentInfo createEmploymentInfo(String data) {
         String[] vals = data.split(",");
 
-        int totalLaborForce = Integer.parseInt(vals[42].trim());
-        int employedLaborForce = Integer.parseInt(vals[43].trim());
-        int unemployedLaborForce = Integer.parseInt(vals[44].trim());
-        double unemployedPercent = Double.parseDouble(vals[45].trim());
+        int totalLaborForce = Integer.parseInt(vals[42]);
+        int employedLaborForce = Integer.parseInt(vals[43]);
+        int unemployedLaborForce = Integer.parseInt(vals[44]);
+        double unemployedPercent = Double.parseDouble(vals[45]);
         return new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
 
     }
