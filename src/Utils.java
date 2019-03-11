@@ -9,10 +9,10 @@ public class Utils {
 
     }
 
-    public ArrayList<ElectionResult> parseElectionResults() {
+    public ArrayList<ElectionInfo> parseElectionResults() {
         String data = readFileAsString("data/2016_Presidential_Results.csv");
 
-        ArrayList<ElectionResult> results = new ArrayList<>();
+        ArrayList<ElectionInfo> results = new ArrayList<>();
 
         String[] electionData = data.split("\n");
 
@@ -22,7 +22,7 @@ public class Utils {
 
             vals = removePercentage(vals);
 
-            ElectionResult e = createElectionResult(vals);
+            ElectionInfo e = createElectionResult(vals);
             results.add(e);
 
         }
@@ -84,7 +84,7 @@ public class Utils {
         return output.toString();
     }
 
-    private ElectionResult createElectionResult(String data) {
+    private ElectionInfo createElectionResult(String data) {
         String[] vals = data.split(",");
         int demVotes = (int) Double.parseDouble(vals[1]);
         int gopVotes = (int) Double.parseDouble(vals[2]);
@@ -96,7 +96,7 @@ public class Utils {
         String state = vals[8];
         String county = vals[9];
         int combinedFips = (int) Double.parseDouble(vals[10]);
-        ElectionResult electionResult = new ElectionResult(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
+        ElectionInfo electionResult = new ElectionInfo(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
         return electionResult;
     }
 
