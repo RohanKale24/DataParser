@@ -89,14 +89,7 @@ public class Utils {
         int demVotes = (int) Double.parseDouble(vals[1]);
         int gopVotes = (int) Double.parseDouble(vals[2]);
         int totalVotes = (int) Double.parseDouble(vals[3]);
-        double votesPerDem = Double.parseDouble(vals[4]);
-        double votesPerGop = Double.parseDouble(vals[5]);
-        double diffBtwnDemAndGop = Double.parseDouble(vals[6]);
-        double perPointDiff = Double.parseDouble(vals[7]);
-        String state = vals[8];
-        String county = vals[9];
-        int combinedFips = (int) Double.parseDouble(vals[10]);
-        ElectionInfo electionResult = new ElectionInfo(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
+        ElectionInfo electionResult = new ElectionInfo(demVotes, gopVotes, totalVotes);
         return electionResult;
     }
 
