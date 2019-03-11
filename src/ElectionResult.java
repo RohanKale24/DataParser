@@ -1,7 +1,7 @@
 public class ElectionResult {
-    int demVotes,gopVotes,totalVotes,combinedFips;
-    double votesPerDem,votesPerGop,diffBtwnDemAndGop,perPointDiff;
-    String state,county;
+    private int demVotes,gopVotes,totalVotes,combinedFips;
+    private double votesPerDem,votesPerGop,diffBtwnDemAndGop,perPointDiff;
+    private String state,county;
 
     public ElectionResult(int demVotes, int gopVotes, int totalVotes, double votesPerDem, double votesPerGop, double diffBtwnDemAndGop,double perPointDiff, String state, String county, int combinedFips){
         this.demVotes = demVotes;
@@ -96,8 +96,10 @@ public class ElectionResult {
         this.combinedFips = combinedFips;
     }
     public String toString(){
+
         String s = votesPerDem+".0," + votesPerGop+".0,"+totalVotes+".0,"+votesPerDem+","+votesPerGop+
                 ","+"\""+diffBtwnDemAndGop+","+"\","+perPointDiff+"%," + state+","+county+","+combinedFips;
+
         return s;
     }
 

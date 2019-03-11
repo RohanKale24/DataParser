@@ -9,6 +9,30 @@ public class Utils {
 
     }
 
+    public ArrayList<EducationInfo> parseEducationInfo(){
+        String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
+        for (int i = 8; i < employmentData.length; i++) {
+            String[] vals = formatData(employmentData[i]).split(",");
+
+        }
+    }
+
+    private String formatData(String data) {
+        String buildString = "";
+        char[] chars = data.toCharArray();
+        int length = chars.length;
+        boolean inQuotes = false;
+        for (int i = 0; i < length; i++) {
+            if (chars[i] == '"') inQuotes = !inQuotes;
+            else if (!(inQuotes && chars[i] == ',')) {
+                buildString += chars[i];
+            }
+        }
+        return buildString;
+    }
+
+
+
     public static String readFileAsString(String filepath) {
         StringBuilder output = new StringBuilder();
 
@@ -25,7 +49,8 @@ public class Utils {
         return output.toString();
     }
 
-    public ArrayList<ElectionResult> parseElectionResults(String data) {
+    public ArrayList<ElectionResult> parseElectionResults() {
+        String data = readFileAsString("C:\\Users\\gamem\\IdeaProjects\\DataParser\\data\\2016_Presidential_Results.csv");
 
         ArrayList<ElectionResult> results = new ArrayList<>();
 
@@ -95,7 +120,7 @@ public class Utils {
         return dataWithoutSecondApostrophe;
     }
 
-    public ElectionResult createElectionResult(String data) {
+    private ElectionResult createElectionResult(String data) {
         String[] categories = data.split(",");
         int demVotes = (int) Double.parseDouble(categories[1]);
         int gopVotes = (int) Double.parseDouble(categories[2]);
@@ -111,7 +136,7 @@ public class Utils {
         return electionResult;
     }
 
-    public String removePercentage(String data) {
+    private String removePercentage(String data) {
 
         String dataWithoutPercentage = data.substring(0, data.indexOf("%")) +
                 data.substring(data.indexOf("%") + 1);
