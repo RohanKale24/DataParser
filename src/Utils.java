@@ -9,21 +9,49 @@ public class Utils {
 
     }
 
-    public ArrayList<EducationInfo> parseEducationInfo(){
+    public ArrayList<ElectionResult> parseElectionResults() {
+        String data = readFileAsString("data/2016_Presidential_Results.csv");
+
+        ArrayList<ElectionResult> results = new ArrayList<>();
+
+        String[] electionData = data.split("\n");
+
+        for (int i = 1; i < electionData.length; i++) {
+
+            String vals = formatData(electionData[i]);
+
+            vals = removePercentage(vals);
+
+            ElectionResult e = createElectionResult(vals);
+            results.add(e);
+
+        }
+        return results;
+    }
+
+    public ArrayList<EducationInfo> parseEducationInfo() {
         ArrayList<EducationInfo> totalEducationInfo = new ArrayList<>();
         String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
         for (int i = 8; i < employmentData.length; i++) {
-            String[] vals = formatData(employmentData[i]).split(",");
+            String vals = formatData(employmentData[i]);
 
-            double noHighSchool = Double.parseDouble(vals[43]);
-            double onlyHighSchool = Double.parseDouble(vals[44]);
-            double someCollege = Double.parseDouble(vals[45]);
-            double bachelorsOrMore = Double.parseDouble(vals[46]);
-            EducationInfo e = new EducationInfo(noHighSchool, onlyHighSchool, someCollege, bachelorsOrMore);
+            EducationInfo e = createEducationInfo(vals);
+
             totalEducationInfo.add(e);
 
         }
         return totalEducationInfo;
+    }
+
+    public ArrayList<EmploymentInfo> parseEmploymentInfo() {
+        ArrayList<EmploymentInfo> totalEmploymentResults = new ArrayList<>();
+        String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
+        for (int i = 8; i < employmentData.length; i++) {
+            String vals = formatData(employmentData[i]);
+            EmploymentInfo e = createEmploymentInfo(vals);
+            totalEmploymentResults.add(e);
+        }
+        return totalEmploymentResults;
     }
 
     private String formatData(String data) {
@@ -31,27 +59,13 @@ public class Utils {
         char[] chars = data.toCharArray();
         boolean inQuotes = false;
         for (int i = 0; i < chars.length; i++) {
-            if (chars[i] == '"') {inQuotes = !inQuotes;}
-            else if (!(inQuotes && chars[i] == ',')) {
+            if (chars[i] == '"') {
+                inQuotes = !inQuotes;
+            } else if (!(inQuotes && chars[i] == ',')) {
                 normalizedString += chars[i];
             }
         }
         return normalizedString;
-    }
-
-    public ArrayList<EmploymentInfo> parseEmploymentInfo(){
-        ArrayList<EmploymentInfo> totalEmploymentResults = new ArrayList<>();
-        String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
-        for (int i = 8; i < employmentData.length; i++) {
-            String[] vals = formatData(employmentData[i]).split(",");
-            int totalLaborForce = Integer.parseInt(vals[42].trim());
-            int employedLaborForce = Integer.parseInt(vals[43].trim());
-            int unemployedLaborForce = Integer.parseInt(vals[44].trim());
-            double unemployedPercent = Double.parseDouble(vals[45].trim());
-            EmploymentInfo e = new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
-            totalEmploymentResults.add(e);
-        }
-        return totalEmploymentResults;
     }
 
     public static String readFileAsString(String filepath) {
@@ -70,91 +84,41 @@ public class Utils {
         return output.toString();
     }
 
-    public ArrayList<ElectionResult> parseElectionResults() {
-        String data = readFileAsString("data/2016_Presidential_Results.csv");
-
-        ArrayList<ElectionResult> results = new ArrayList<>();
-
-        String[] lines = data.split("\n");
-
-        for (int i = 1; i < lines.length; i++) {
-
-            String line = lines[i];
-
-            if (line.contains("\"")) {
-
-                String finalData = removeOddCharachters(line);
-
-                ElectionResult electionResult = createElectionResult(finalData);
-
-                results.add(electionResult);
-            } else {
-
-                String finalData = removePercentage(line);
-
-                ElectionResult electionResult = createElectionResult(finalData);
-
-                results.add(electionResult);
-            }
-        }
-        return results;
-    }
-
-    private String removeOddCharachters(String line) {
-
-        int indexOfApostrophe = line.indexOf("\"");
-
-        int indexOfComma = line.indexOf(",", indexOfApostrophe);
-
-        String dataWithoutPercentage = removePercentage(line);
-
-        String dataWithoutExtraComma = removeComma(dataWithoutPercentage, indexOfComma, indexOfApostrophe);
-
-        String dataWithoutApostrophe = removeApostrophe(dataWithoutExtraComma, indexOfApostrophe);
-
-        return dataWithoutApostrophe;
-    }
-
-    private String removeComma(String dataWithoutPercentage, int indexOfComma, int indexOfApostrophe) {
-        String dataWithoutExtraComma = dataWithoutPercentage.substring(0, indexOfComma) + dataWithoutPercentage.substring(indexOfComma + 1);
-
-        if (dataWithoutExtraComma.indexOf(",", indexOfApostrophe) < dataWithoutExtraComma.indexOf("\"", indexOfApostrophe + 1) && dataWithoutExtraComma.indexOf(",", indexOfApostrophe) != -1) {
-
-
-            int newIndexOfComma = dataWithoutExtraComma.indexOf(",", indexOfApostrophe);
-            dataWithoutExtraComma = dataWithoutExtraComma.substring(0, newIndexOfComma) + dataWithoutExtraComma.substring(newIndexOfComma + 1);
-
-
-        }
-        return dataWithoutExtraComma;
-    }
-
-    private String removeApostrophe(String dataWithoutExtraComma, int indexOfApostrophe) {
-        String dataWithoutFirstApostrophe = dataWithoutExtraComma.substring(0, indexOfApostrophe) +
-                dataWithoutExtraComma.substring(indexOfApostrophe + 1);
-
-        int indexOfSecondApostrophe = dataWithoutFirstApostrophe.indexOf("\"");
-
-        String dataWithoutSecondApostrophe = dataWithoutFirstApostrophe.substring(0, indexOfSecondApostrophe)
-                + dataWithoutFirstApostrophe.substring(indexOfSecondApostrophe + 1);
-
-        return dataWithoutSecondApostrophe;
-    }
-
     private ElectionResult createElectionResult(String data) {
-        String[] categories = data.split(",");
-        int demVotes = (int) Double.parseDouble(categories[1]);
-        int gopVotes = (int) Double.parseDouble(categories[2]);
-        int totalVotes = (int) Double.parseDouble(categories[3]);
-        double votesPerDem = Double.parseDouble(categories[4]);
-        double votesPerGop = Double.parseDouble(categories[5]);
-        double diffBtwnDemAndGop = Double.parseDouble(categories[6]);
-        double perPointDiff = Double.parseDouble(categories[7]);
-        String state = categories[8];
-        String county = categories[9];
-        int combinedFips = (int) Double.parseDouble(categories[10]);
+        String[] vals = data.split(",");
+        int demVotes = (int) Double.parseDouble(vals[1]);
+        int gopVotes = (int) Double.parseDouble(vals[2]);
+        int totalVotes = (int) Double.parseDouble(vals[3]);
+        double votesPerDem = Double.parseDouble(vals[4]);
+        double votesPerGop = Double.parseDouble(vals[5]);
+        double diffBtwnDemAndGop = Double.parseDouble(vals[6]);
+        double perPointDiff = Double.parseDouble(vals[7]);
+        String state = vals[8];
+        String county = vals[9];
+        int combinedFips = (int) Double.parseDouble(vals[10]);
         ElectionResult electionResult = new ElectionResult(demVotes, gopVotes, totalVotes, votesPerDem, votesPerGop, diffBtwnDemAndGop, perPointDiff, state, county, combinedFips);
         return electionResult;
+    }
+
+    private EducationInfo createEducationInfo(String data) {
+        String[] vals = data.split(",");
+
+        double noHighSchool = Double.parseDouble(vals[43]);
+        double onlyHighSchool = Double.parseDouble(vals[44]);
+        double someCollege = Double.parseDouble(vals[45]);
+        double bachelorsOrMore = Double.parseDouble(vals[46]);
+        return new EducationInfo(noHighSchool, onlyHighSchool, someCollege, bachelorsOrMore);
+    }
+
+    private EmploymentInfo createEmploymentInfo(String data) {
+        String[] vals = data.split(",");
+
+        int totalLaborForce = Integer.parseInt(vals[42].trim());
+        int employedLaborForce = Integer.parseInt(vals[43].trim());
+        int unemployedLaborForce = Integer.parseInt(vals[44].trim());
+        double unemployedPercent = Double.parseDouble(vals[45].trim());
+        return new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
+
     }
 
     private String removePercentage(String data) {
