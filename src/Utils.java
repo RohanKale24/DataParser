@@ -40,7 +40,18 @@ public class Utils {
     }
 
     public ArrayList<EmploymentInfo> parseEmploymentInfo(){
-
+        ArrayList<EmploymentInfo> totalEmploymentResults = new ArrayList<>();
+        String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
+        for (int i = 8; i < employmentData.length; i++) {
+            String[] vals = formatData(employmentData[i]).split(",");
+            int totalLaborForce = Integer.parseInt(vals[42].trim());
+            int employedLaborForce = Integer.parseInt(vals[43].trim());
+            int unemployedLaborForce = Integer.parseInt(vals[44].trim());
+            double unemployedPercent = Double.parseDouble(vals[45].trim());
+            EmploymentInfo e = new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
+            totalEmploymentResults.add(e);
+        }
+        return totalEmploymentResults;
     }
 
     public static String readFileAsString(String filepath) {
