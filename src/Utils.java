@@ -75,9 +75,9 @@ public class Utils {
 
     public ArrayList<EducationInfo> parseEducationInfo() {
         ArrayList<EducationInfo> totalEducationInfo = new ArrayList<>();
-        String[] employmentData = readFileAsString("data/Unemployment.csv").split("\n");
-        for (int i = 7; i < employmentData.length; i++) {
-            String vals = formatData(employmentData[i]);
+        String[] educationData = readFileAsString("data/Education.csv").split("\n");
+        for (int i = 7; i < educationData.length; i++) {
+            String vals = formatData(educationData[i]);
 
             EducationInfo e = createEducationInfo(vals);
 
@@ -139,22 +139,32 @@ public class Utils {
 
     private EducationInfo createEducationInfo(String data) {
         String[] vals = data.split(",");
-
-        double noHighSchool = Double.parseDouble(vals[43]);
-        double onlyHighSchool = Double.parseDouble(vals[44]);
-        double someCollege = Double.parseDouble(vals[45]);
-        double bachelorsOrMore = Double.parseDouble(vals[46]);
-        return new EducationInfo(noHighSchool, onlyHighSchool, someCollege, bachelorsOrMore);
+        try {
+            double noHighSchool = Double.parseDouble(vals[43]);
+            double onlyHighSchool = Double.parseDouble(vals[44]);
+            double someCollege = Double.parseDouble(vals[45]);
+            double bachelorsOrMore = Double.parseDouble(vals[46]);
+            return new EducationInfo(noHighSchool, onlyHighSchool, someCollege, bachelorsOrMore);
+        }catch (Exception e){
+            System.out.println("invalid Format");
+            return new EducationInfo(-1,-1,-1,-1);
+        }
     }
 
     private EmploymentInfo createEmploymentInfo(String data) {
         String[] vals = data.split(",");
 
-        int totalLaborForce = Integer.parseInt(vals[42]);
-        int employedLaborForce = Integer.parseInt(vals[43]);
-        int unemployedLaborForce = Integer.parseInt(vals[44]);
-        double unemployedPercent = Double.parseDouble(vals[45]);
-        return new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
+        try {
+            int totalLaborForce = Integer.parseInt(vals[42].trim());
+            int employedLaborForce = Integer.parseInt(vals[43].trim());
+            int unemployedLaborForce = Integer.parseInt(vals[44].trim());
+            double unemployedPercent = Double.parseDouble(vals[45].trim());
+            return new EmploymentInfo(totalLaborForce, employedLaborForce, unemployedLaborForce, unemployedPercent);
+        }catch (Exception e){
+            System.out.println("invalid format");
+
+            return new EmploymentInfo(-1,-1,-1,-1);
+        }
 
     }
 
