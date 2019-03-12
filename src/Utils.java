@@ -85,7 +85,7 @@ public class Utils {
 
         }
         return totalEducationInfo;
-    }//debug
+    }
 
     public ArrayList<EmploymentInfo> parseEmploymentInfo() {
         ArrayList<EmploymentInfo> totalEmploymentResults = new ArrayList<>();
@@ -96,7 +96,7 @@ public class Utils {
             totalEmploymentResults.add(e);
         }
         return totalEmploymentResults;
-    }//debug
+    }
 
     private String formatData(String data) {
         String normalizedString = "";
@@ -133,7 +133,12 @@ public class Utils {
         int demVotes = (int) Double.parseDouble(vals[1]);
         int gopVotes = (int) Double.parseDouble(vals[2]);
         int totalVotes = (int) Double.parseDouble(vals[3]);
-        ElectionInfo electionResult = new ElectionInfo(demVotes, gopVotes, totalVotes);
+
+        String state = vals[8];
+        String county = vals[9];
+        int combinedFips = (int) Double.parseDouble(vals[10]);
+
+        ElectionInfo electionResult = new ElectionInfo(demVotes, gopVotes, totalVotes,state,county,combinedFips);
         return electionResult;
     }
 

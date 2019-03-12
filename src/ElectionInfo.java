@@ -1,12 +1,15 @@
 public class ElectionInfo {
-    private int demVotes,gopVotes,totalVotes;
+    private int demVotes,gopVotes,totalVotes,combinedFips;
+    private String State, county;
 
 
-    public ElectionInfo(int demVotes, int gopVotes, int totalVotes){
+    public ElectionInfo(int demVotes, int gopVotes, int totalVotes,String State, String county, int combinedFips){
         this.demVotes = demVotes;
         this.gopVotes = gopVotes;
         this.totalVotes = totalVotes;
-
+        this.State = State;
+        this.county = county;
+        this.combinedFips = combinedFips;
     }
 
     public int getDemVotes() {
