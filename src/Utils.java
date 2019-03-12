@@ -19,6 +19,7 @@ public class Utils {
         ArrayList<ElectionInfo> electionResults = parseElectionResults();
         ArrayList<EducationInfo> eduResults = parseEducationInfo();
         ArrayList<EmploymentInfo> employmentresults = parseEmploymentInfo();
+        sortElectionResults();
         ArrayList<County> counties = new ArrayList<>();
         for (int i = 0; i < MAX_FIPS_NUMBER; i++) {
             County c = new County("add later",i);//finish this code block
@@ -31,6 +32,10 @@ public class Utils {
             counties.add(c);
         }
         return counties;
+    }
+
+    private void sortElectionResults() {
+
     }
 
     public ArrayList<State> createStates(){
